@@ -1,1 +1,1 @@
-# Java-Kopta-Niemczyk
+# Java-Kopta-Niemczyk Project
