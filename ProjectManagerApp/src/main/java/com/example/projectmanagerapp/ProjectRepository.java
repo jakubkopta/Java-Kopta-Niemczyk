@@ -1,4 +1,4 @@
-package com.example.projectmanagerapp.repository;
+package com.example.projectmanagerapp;
 
 import com.example.projectmanagerapp.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
