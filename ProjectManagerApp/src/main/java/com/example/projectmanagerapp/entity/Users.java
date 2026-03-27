@@ -1,5 +1,6 @@
 package com.example.projectmanagerapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class Users {
     private Long id;
     private String username;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "users")
     private Set<Project> projects;
 }
