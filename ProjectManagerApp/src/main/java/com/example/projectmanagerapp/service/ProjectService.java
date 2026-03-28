@@ -1,24 +1,41 @@
 package com.example.projectmanagerapp.service;
+
 import com.example.projectmanagerapp.entity.Project;
 import com.example.projectmanagerapp.repository.ProjectRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @Service
 public class ProjectService {
 
-    private final ProjectRepository ProjectRepository;
+    private final ProjectRepository projectRepository;
 
-    public ProjectService(ProjectRepository ProjectRepository) {
-        this.ProjectRepository = ProjectRepository;
+    public ProjectService(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
     }
 
     public List<Project> getAllProjects() {
-        return ProjectRepository.findAll();
+        return projectRepository.findAll();
     }
 
-
     public Project createProject(Project project) {
-        return ProjectRepository.save(project);
+        return projectRepository.save(project);
+    }
+
+    public Project updateProject(Long id, Project payload) {
+        Project existing = projectRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        existing.setName(payload.getName());
+        return projectRepository.save(existing);
+    }
+
+    public void deleteProject(Long id) {
+        if (!projectRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        projectRepository.deleteById(id);
     }
 }

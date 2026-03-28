@@ -32,4 +32,16 @@ public class ProjectController {
         Project createdProject = projectService.createProject(project);
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update project", description = "Updates an existing project by id.")
+    public Project updateProject(@PathVariable Long id, @RequestBody Project project) {
+        return projectService.updateProject(id, project);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete project", description = "Deletes a project by id.")
+    public void deleteProject(@PathVariable Long id) {
+        projectService.deleteProject(id);
+    }
 }
