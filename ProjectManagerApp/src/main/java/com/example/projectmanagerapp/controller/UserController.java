@@ -1,6 +1,7 @@
 package com.example.projectmanagerapp.controller;
+
 import com.example.projectmanagerapp.entity.Users;
-import com.example.projectmanagerapp.repository.UserRepository;
+import com.example.projectmanagerapp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,18 @@ public class UserController {
     {
         Users createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update user", description = "Updates an existing user by id.")
+    public Users updateUser(@PathVariable Long id, @RequestBody Users user) {
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete user", description = "Deletes a user by id.")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
     }
 }
