@@ -42,4 +42,9 @@ public class TaskService {
         }
         taskRepository.deleteById(id);
     }
+
+    public Task getTaskById(Long id) {
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 }

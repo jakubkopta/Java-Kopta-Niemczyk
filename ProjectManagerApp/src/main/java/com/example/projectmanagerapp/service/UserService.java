@@ -38,4 +38,9 @@ public class UserService {
         }
         userRepository.deleteById(id);
     }
+
+    public Users getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 }

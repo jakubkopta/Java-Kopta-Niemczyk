@@ -38,4 +38,9 @@ public class ProjectService {
         }
         projectRepository.deleteById(id);
     }
+
+    public Project getProjectById(Long id) {
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 }
