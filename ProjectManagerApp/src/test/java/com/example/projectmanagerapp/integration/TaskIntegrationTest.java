@@ -83,8 +83,16 @@ class TaskIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.description").value("Updated description"))
                 .andExpect(jsonPath("$.taskType").value("HIGH_PRIORITY"));
 
+        mockMvc.perform(put("/api/tasks/999")
+                        .contentType("application/json")
+                        .content(updateTaskPayload))
+                .andExpect(status().isNotFound());
+
         mockMvc.perform(delete("/api/tasks/1"))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(delete("/api/tasks/999"))
+                .andExpect(status().isNotFound());
 
         mockMvc.perform(get("/api/tasks/1"))
                 .andExpect(status().isNotFound());

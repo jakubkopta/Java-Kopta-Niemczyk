@@ -48,8 +48,16 @@ public class ProjectIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Updated Integration Project"));
 
+        mockMvc.perform(put("/api/projects/999")
+                        .contentType("application/json")
+                        .content(updatePayload))
+                .andExpect(status().isNotFound());
+
         mockMvc.perform(delete("/api/projects/1"))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(delete("/api/projects/999"))
+                .andExpect(status().isNotFound());
 
         mockMvc.perform(get("/api/projects/1"))
                 .andExpect(status().isNotFound());
