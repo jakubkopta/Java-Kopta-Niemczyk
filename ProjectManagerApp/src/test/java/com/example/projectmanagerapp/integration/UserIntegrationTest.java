@@ -49,8 +49,16 @@ class UserIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.username").value("updated-integration-user"));
 
+        mockMvc.perform(put("/api/users/999")
+                        .contentType("application/json")
+                        .content(updatePayload))
+                .andExpect(status().isNotFound());
+
         mockMvc.perform(delete("/api/users/1"))
                 .andExpect(status().isNoContent());
+
+        mockMvc.perform(delete("/api/users/999"))
+                .andExpect(status().isNotFound());
 
         mockMvc.perform(get("/api/users/1"))
                 .andExpect(status().isNotFound());

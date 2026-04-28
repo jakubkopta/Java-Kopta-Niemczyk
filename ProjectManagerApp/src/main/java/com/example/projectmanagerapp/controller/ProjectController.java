@@ -50,4 +50,10 @@ public class ProjectController {
     public Project getProjectById(@PathVariable Long id) {
         return projectService.getProjectById(id);
     }
+
+    @PostMapping("/{id}/users/{userId}")
+    @Operation(summary = "Assign user to project", description = "Assigns an existing user to an existing project.")
+    public Project assignUserToProject(@PathVariable Long id, @PathVariable Long userId) {
+        return projectService.assignUserToProject(id, userId);
+    }
 }
