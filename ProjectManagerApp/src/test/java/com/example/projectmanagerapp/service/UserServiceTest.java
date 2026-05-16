@@ -13,7 +13,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -80,6 +82,20 @@ class UserServiceTest {
         Users result = userService.createUser(payload);
 
         assertEquals("CreatedUser", result.getUsername());
+        verify(userRepository, times(1)).save(payload);
+    }
+
+    @Test
+    @DisplayName("Should create user when Swagger sends id 0")
+    void shouldCreateUserWhenIdIsZero() {
+        Users payload = new Users();
+        payload.setId(0L);
+        payload.setUsername("swagger-user");
+        when(userRepository.save(any(Users.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        userService.createUser(payload);
+
+        assertNull(payload.getId());
         verify(userRepository, times(1)).save(payload);
     }
 

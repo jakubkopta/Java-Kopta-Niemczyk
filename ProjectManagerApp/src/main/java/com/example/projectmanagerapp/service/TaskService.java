@@ -22,6 +22,7 @@ public class TaskService {
     }
 
     public Task createTask(Task task) {
+        task.setId(null);
         return taskRepository.save(task);
     }
 
